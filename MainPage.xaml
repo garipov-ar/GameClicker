@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Game.MainPage"
+             Title="Game">
+
+    <Grid x:Name="GameArea" RowDefinitions="Auto, Auto, *, Auto" ColumnDefinitions="*">
+        <!-- Верхняя часть: счетчики -->
+        <StackLayout Grid.Row="0" 
+                     VerticalOptions="Start" 
+                     HorizontalOptions="Center" 
+                     Margin="20" 
+                     Spacing="10">
+            <Label Text="{Binding Traffic, StringFormat='Трафик: {0}'}" 
+                   FontSize="30" 
+                   HorizontalOptions="Center" />
+            <Label Text="{Binding TrafficPerClick, StringFormat='Трафик за клик: {0}'}" 
+                   FontSize="20" 
+                   HorizontalOptions="Center" />
+            <Label Text="{Binding VpnCount, StringFormat='VPN: {0}'}" 
+                   FontSize="20" 
+                   HorizontalOptions="Center" />
+            <Label Text="{Binding MirrorCount, StringFormat='Зеркала: {0}'}" 
+                   FontSize="20" 
+                   HorizontalOptions="Center" />
+            <Label Text="{Binding PassiveIncome, StringFormat='Пассивный доход: {0}/сек'}" 
+                   FontSize="20" 
+                   HorizontalOptions="Center" />
+            <Label Text="{Binding Level, StringFormat='Уровень: {0}'}" 
+                   FontSize="20" 
+                   HorizontalOptions="Center" />
+            <Label Text="{Binding LevelTarget, StringFormat='Цель: {0} трафика'}" 
+                   FontSize="20" 
+                   HorizontalOptions="Center" />
+        </StackLayout>
+
+        <!-- Прогресс-бар -->
+        <ProgressBar Grid.Row="1" 
+                     Progress="{Binding Progress}" 
+                     Margin="10"     
+                     HeightRequest="20"
+                     BackgroundColor="LightGray" 
+                     ProgressColor="Green" />
+
+        <!-- Центральная часть: монитор с уведомлениями -->
+        <Frame Grid.Row="2" 
+               Margin="20" 
+               BackgroundColor="Black" 
+               BorderColor="Gray" 
+               CornerRadius="10"
+               HeightRequest="150">
+            <ListView ItemsSource="{Binding Notifications}" 
+                      BackgroundColor="Black" 
+                      SeparatorVisibility="None">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Label Text="{Binding Message}" 
+                                   FontSize="14" 
+                                   Margin="10,5">
+                                <Label.Triggers>
+                                    <!-- Зеленый цвет для позитивных уведомлений -->
+                                    <DataTrigger TargetType="Label" 
+                                                 Binding="{Binding IsPositive}" 
+                                                 Value="True">
+                                        <Setter Property="TextColor" Value="Green" />
+                                    </DataTrigger>
+
+                                    <!-- Красный цвет для негативных уведомлений -->
+                                    <DataTrigger TargetType="Label" 
+                                                 Binding="{Binding IsPositive}" 
+                                                 Value="False">
+                                        <Setter Property="TextColor" Value="Red" />
+                                    </DataTrigger>
+                                </Label.Triggers>
+                            </Label>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Frame>
+
+        <!-- Нижняя часть: кнопки -->
+        <StackLayout Grid.Row="3" 
+                     VerticalOptions="End" 
+                     HorizontalOptions="Center" 
+                     Margin="20" 
+                     Spacing="10">
+            <Button x:Name="BlockButton"
+                    Text="Go!"
+                    Command="{Binding BlockCommand}"
+                    FontSize="70"
+                    WidthRequest="200"
+                    HeightRequest="200"
+                    CornerRadius="100"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"
+        BackgroundColor="LightBlue" />
+            <Button Text="{Binding VpnPrice, StringFormat='Купить VPN ({0} трафика)'}" 
+                    Command="{Binding BuyVpnCommand}" 
+                    FontSize="20" />
+            <Button Text="{Binding MirrorPrice, StringFormat='Создать зеркало ({0} трафика)'}" 
+                    Command="{Binding BuyMirrorCommand}" 
+                    FontSize="20" />
+        </StackLayout>
+    </Grid>
+</ContentPage>
