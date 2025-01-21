@@ -8,7 +8,7 @@ namespace Game
         public App()
         {
             InitializeComponent();
-            MainPage = new MainPage();
+            MainPage = new NavigationPage(new MainPage());
         }
 
         protected override Window CreateWindow(IActivationState activationState)
@@ -17,13 +17,13 @@ namespace Game
 
             // Устанавливаем размеры окна (ширина и высота в пикселях)
             window.Width = 700;
-            window.Height = 900;
+            window.Height = 1000;
 
             // Опционально: задаем минимальные и максимальные размеры окна
             window.MinimumWidth = 700;
-            window.MinimumHeight = 900;
+            window.MinimumHeight = 1000;
             window.MaximumWidth = 700;
-            window.MaximumHeight = 900;
+            window.MaximumHeight = 1000;
 
             // Опционально: задаем начальную позицию окна
             window.X = 100;

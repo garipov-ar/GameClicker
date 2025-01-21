@@ -1,6 +1,7 @@
 ﻿using Microsoft.Maui.Controls;
 using System.Threading.Tasks;
 using Microsoft.Maui.Graphics;
+using Game.Pages;
 
 namespace Game
 {
@@ -14,6 +15,9 @@ namespace Game
             ViewModel = new MainViewModel();
             BindingContext = ViewModel;
 
+            ViewModel.GameOverRequested += OnGameOverRequested;
+
+
             // Подписываемся на событие для анимаций
             ViewModel.ShowAnimationRequested += OnShowAnimationRequested;
 
@@ -21,12 +25,21 @@ namespace Game
             ViewModel.ButtonAnimationRequested += OnButtonAnimationRequested;
         }
 
+        private async void OnGameOverRequested()
+        {
+            // Переходим на страницу GameOverPage
+            await MainThread.InvokeOnMainThreadAsync(async () =>
+            {
+                await Navigation.PushAsync(new GameOverPage());
+            });
+        }
+
         // Обработчик анимации кнопки
         private async void OnButtonAnimationRequested(string animationType)
         {
             if (animationType == "BlockButtonClicked")
             {
-                var button = FindByName("BlockButton") as Button; // Убедитесь, что у кнопки есть x:Name="BlockButton"
+                var button = FindByName("BlockButton") as ImageButton; 
                 if (button != null)
                 {
                     await button.ScaleTo(0.8, 100); // Уменьшение размера кнопки

@@ -6,33 +6,65 @@
 
     <Grid x:Name="GameArea" RowDefinitions="Auto, Auto, *, Auto" ColumnDefinitions="*">
         <!-- Верхняя часть: счетчики -->
-        <StackLayout Grid.Row="0" 
-                     VerticalOptions="Start" 
-                     HorizontalOptions="Center" 
-                     Margin="20" 
-                     Spacing="10">
-            <Label Text="{Binding Traffic, StringFormat='Трафик: {0}'}" 
-                   FontSize="30" 
-                   HorizontalOptions="Center" />
-            <Label Text="{Binding TrafficPerClick, StringFormat='Трафик за клик: {0}'}" 
-                   FontSize="20" 
-                   HorizontalOptions="Center" />
-            <Label Text="{Binding VpnCount, StringFormat='VPN: {0}'}" 
-                   FontSize="20" 
-                   HorizontalOptions="Center" />
-            <Label Text="{Binding MirrorCount, StringFormat='Зеркала: {0}'}" 
-                   FontSize="20" 
-                   HorizontalOptions="Center" />
-            <Label Text="{Binding PassiveIncome, StringFormat='Пассивный доход: {0}/сек'}" 
-                   FontSize="20" 
-                   HorizontalOptions="Center" />
-            <Label Text="{Binding Level, StringFormat='Уровень: {0}'}" 
-                   FontSize="20" 
-                   HorizontalOptions="Center" />
-            <Label Text="{Binding LevelTarget, StringFormat='Цель: {0} трафика'}" 
-                   FontSize="20" 
-                   HorizontalOptions="Center" />
-        </StackLayout>
+        <Frame BackgroundColor="#2A2A2A" Padding="10" CornerRadius="15" HasShadow="True" >
+            <StackLayout Grid.Row="0" 
+                 VerticalOptions="Start" 
+                 HorizontalOptions="Center" 
+                 Margin="20" 
+                 Spacing="10">
+
+                <!-- Трафик -->
+                <Label Text="{Binding Traffic, StringFormat='Трафик: {0}'}" 
+               FontSize="30" 
+               HorizontalOptions="Center" 
+               TextColor="#32CD32" 
+               FontAttributes="Bold" />
+
+                <!-- Трафик за клик -->
+                <Label Text="{Binding TrafficPerClick, StringFormat='Трафик за клик: {0}'}" 
+               FontSize="20" 
+               HorizontalOptions="Center" 
+               TextColor="#FFD700" 
+               FontAttributes="Italic" />
+
+                <!-- VPN -->
+                <Label Text="{Binding VpnCount, StringFormat='VPN: {0}'}" 
+               FontSize="20" 
+               HorizontalOptions="Center" 
+               TextColor="#1E90FF" 
+               FontAttributes="Bold" />
+
+                <!-- Зеркала -->
+                <Label Text="{Binding MirrorCount, StringFormat='Зеркала: {0}'}" 
+               FontSize="20" 
+               HorizontalOptions="Center" 
+               TextColor="#FF6347" 
+               FontAttributes="Italic" />
+
+                <!-- Пассивный доход -->
+                <Label Text="{Binding PassiveIncome, StringFormat='Пассивный доход: {0}/сек'}" 
+               FontSize="20" 
+               HorizontalOptions="Center" 
+               TextColor="#ADFF2F" 
+               FontAttributes="Bold" />
+
+                <!-- Уровень -->
+                <Label Text="{Binding Level, StringFormat='Уровень: {0}'}" 
+               FontSize="20" 
+               HorizontalOptions="Center" 
+               TextColor="#FFD700" 
+               FontAttributes="Italic" />
+
+                <!-- Цель -->
+                <Label Text="{Binding LevelTarget, StringFormat='Цель: {0} трафика'}" 
+               FontSize="20" 
+               HorizontalOptions="Center" 
+               TextColor="#FF4500" 
+               FontAttributes="Bold" />
+            </StackLayout>
+        </Frame>
+
+
 
         <!-- Прогресс-бар -->
         <ProgressBar Grid.Row="1" 
@@ -45,12 +77,12 @@
         <!-- Центральная часть: монитор с уведомлениями -->
         <Frame Grid.Row="2" 
                Margin="20" 
-               BackgroundColor="Black" 
+             BackgroundColor="#300A24" 
                BorderColor="Gray" 
                CornerRadius="10"
                HeightRequest="150">
             <ListView ItemsSource="{Binding Notifications}" 
-                      BackgroundColor="Black" 
+                      BackgroundColor="#300A24"  
                       SeparatorVisibility="None">
                 <ListView.ItemTemplate>
                     <DataTemplate>
@@ -63,14 +95,14 @@
                                     <DataTrigger TargetType="Label" 
                                                  Binding="{Binding IsPositive}" 
                                                  Value="True">
-                                        <Setter Property="TextColor" Value="Green" />
+                                        <Setter Property="TextColor" Value="#32CD32" />
                                     </DataTrigger>
 
                                     <!-- Красный цвет для негативных уведомлений -->
                                     <DataTrigger TargetType="Label" 
                                                  Binding="{Binding IsPositive}" 
                                                  Value="False">
-                                        <Setter Property="TextColor" Value="Red" />
+                                        <Setter Property="TextColor" Value="#FF6347" />
                                     </DataTrigger>
                                 </Label.Triggers>
                             </Label>
@@ -86,22 +118,44 @@
                      HorizontalOptions="Center" 
                      Margin="20" 
                      Spacing="10">
-            <Button x:Name="BlockButton"
-                    Text="Go!"
-                    Command="{Binding BlockCommand}"
-                    FontSize="70"
-                    WidthRequest="200"
-                    HeightRequest="200"
-                    CornerRadius="100"
-                    HorizontalOptions="Center"
-                    VerticalOptions="Center"
-        BackgroundColor="LightBlue" />
-            <Button Text="{Binding VpnPrice, StringFormat='Купить VPN ({0} трафика)'}" 
-                    Command="{Binding BuyVpnCommand}" 
-                    FontSize="20" />
-            <Button Text="{Binding MirrorPrice, StringFormat='Создать зеркало ({0} трафика)'}" 
-                    Command="{Binding BuyMirrorCommand}" 
-                    FontSize="20" />
+            <ImageButton x:Name="BlockButton"
+                 Command="{Binding BlockCommand}"
+                 WidthRequest="200"
+                 HeightRequest="200"
+                 CornerRadius="100"
+                 HorizontalOptions="Center"
+                 VerticalOptions="Center"
+                 BackgroundColor="LightBlue"
+                 Aspect="Center">
+                
+                <ImageButton.Source>
+                    <FileImageSource File="button_go.png" />
+                </ImageButton.Source>
+            </ImageButton>
+
+            <Button Command="{Binding BuyVpnCommand}" 
+            FontSize="20"
+            HorizontalOptions="Center"
+            VerticalOptions="Center">
+                <Button.ImageSource>
+                    <FileImageSource File="vpn.png" />
+                </Button.ImageSource>
+                <Button.Text>
+                    <Binding Path="VpnPrice" StringFormat="Купить VPN ({0} трафика)" />
+                </Button.Text>
+            </Button>
+
+            <Button Command="{Binding BuyMirrorCommand}" 
+            FontSize="20"
+            HorizontalOptions="Center"
+            VerticalOptions="Center">
+                <Button.ImageSource>
+                    <FileImageSource File="mirror.png" />
+                </Button.ImageSource>
+                <Button.Text>
+                    <Binding Path="MirrorPrice" StringFormat="Создать зеркало ({0} трафика)" />
+                </Button.Text>
+            </Button>
         </StackLayout>
     </Grid>
 </ContentPage>
