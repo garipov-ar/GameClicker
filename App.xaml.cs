@@ -1,17 +1,17 @@
 ﻿using Microsoft.Maui;
 using Microsoft.Maui.Controls;
-
+using Game.Views;
 namespace Game
 {
     public partial class App : Application
     {
         public App()
         {
-            InitializeComponent();
+            InitializeComponent(); // Этот метод будет сгенерирован автоматически
             MainPage = new NavigationPage(new MainPage());
         }
 
-        protected override Window CreateWindow(IActivationState activationState)
+        protected override Window CreateWindow(IActivationState? activationState)
         {
             var window = base.CreateWindow(activationState);
 
