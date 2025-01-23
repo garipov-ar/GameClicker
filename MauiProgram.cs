@@ -10,7 +10,7 @@ namespace Game
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
-                            .UseMauiCommunityToolkit() // Добавьте эту строку
+                            .UseMauiCommunityToolkit()
 
                 .ConfigureFonts(fonts =>
                 {

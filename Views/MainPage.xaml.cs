@@ -43,8 +43,8 @@ namespace Game.Views
                 var button = FindByName("BlockButton") as ImageButton;
                 if (button != null)
                 {
-                    await button.ScaleTo(0.8, 100); // Уменьшение размера кнопки
-                    await button.ScaleTo(1.0, 100); // Возврат к исходному размеру
+                    await button.ScaleTo(0.8, 100);
+                    await button.ScaleTo(1.0, 100);
                 }
             }
         }

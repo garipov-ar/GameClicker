@@ -10,7 +10,7 @@ namespace Game.Models
         {
             Name = "Зеркало";
             Description = "Увеличивает пассивный доход.";
-            Price = 1000; // Начальная цена
+            Price = 1000; 
         }
 
         public override void Apply(MainViewModel viewModel)
@@ -27,7 +27,7 @@ namespace Game.Models
                 Count++;
                 Price += (int)(Price * 0.2);
                 viewModel.AddNotification($"Создано {Name}! Пассивный доход увеличен на 10.", isPositive: true);
-                // Уведомляем об изменении пассивного дохода
+                
                 viewModel.OnPropertyChanged(nameof(viewModel.PassiveIncome));
             }
             else

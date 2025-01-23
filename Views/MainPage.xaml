@@ -2,24 +2,50 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Game.Views.MainPage"
-             Title="MainPage">
+             >
 
     <Grid x:Name="GameArea" RowDefinitions="Auto, Auto, *, Auto" ColumnDefinitions="*">
         <!-- Верхняя часть: счетчики -->
         <Frame BackgroundColor="#2A2A2A" Padding="10" CornerRadius="15" HasShadow="True">
-            <StackLayout Grid.Row="0" VerticalOptions="Start" HorizontalOptions="Center" Margin="15" Spacing="5">
-                <Label Text="{Binding Traffic, StringFormat='Трафик: {0}'}" FontSize="24" HorizontalOptions="Center" TextColor="#32CD32" FontAttributes="Bold" />
-                <Label Text="{Binding TrafficPerClick, StringFormat='Трафик за клик: {0}'}" FontSize="18" HorizontalOptions="Center" TextColor="#FFD700" FontAttributes="Italic" />
-                <Label Text="{Binding VpnCount, StringFormat='VPN: {0}'}" FontSize="18" HorizontalOptions="Center" TextColor="#1E90FF" FontAttributes="Bold" />
-                <Label Text="{Binding MirrorCount, StringFormat='Зеркала: {0}'}" FontSize="18" HorizontalOptions="Center" TextColor="#FF6347" FontAttributes="Italic" />
-                <Label Text="{Binding PassiveIncome, StringFormat='Пассивный доход: {0}/сек'}" FontSize="18" HorizontalOptions="Center" TextColor="#ADFF2F" FontAttributes="Bold" />
-                <Label Text="{Binding Level, StringFormat='Уровень: {0}'}" FontSize="18" HorizontalOptions="Center" TextColor="#FFD700" FontAttributes="Italic" />
-                <Label Text="{Binding LevelTarget, StringFormat='Цель: {0} трафика'}" FontSize="18" HorizontalOptions="Center" TextColor="#FF4500" FontAttributes="Bold" />
-            </StackLayout>
+            <Grid ColumnDefinitions="*,*,*" RowDefinitions="Auto,Auto" 
+          ColumnSpacing="15" RowSpacing="8" 
+          VerticalOptions="Start" HorizontalOptions="Fill">
+
+                <!-- Первая колонка -->
+                <VerticalStackLayout Grid.Column="0" Grid.RowSpan="2" Spacing="5">
+                    <Label Text="{Binding PassiveIncome, StringFormat='Пассивно: {0}/сек'}" 
+                    FontSize="14" TextColor="#ADFF2F"/>
+                    <Label Text="{Binding TrafficPerClick, StringFormat='За клик: {0}'}" 
+                   FontSize="16" TextColor="#FFD700"/>
+                </VerticalStackLayout>
+
+                <!-- Вторая колонка -->
+                <VerticalStackLayout Grid.Column="1" Grid.RowSpan="2" Spacing="5">
+                    <Label Text="{Binding VpnCount, StringFormat='VPN: {0}'}" 
+                   FontSize="16" TextColor="#1E90FF"/>
+                    <Label Text="{Binding MirrorCount, StringFormat='Зеркала: {0}'}" 
+                   FontSize="16" TextColor="#FF6347"/>
+                </VerticalStackLayout>
+
+                <!-- Третья колонка -->
+                <VerticalStackLayout Grid.Column="2" Spacing="5">
+                    <Label Text="{Binding Level, StringFormat='Уровень: {0}'}" 
+                   FontSize="16" TextColor="#FFD700" FontAttributes="Italic"/>
+                    <Label Text="{Binding LevelTarget, StringFormat='Цель: {0}'}" 
+                   FontSize="16" TextColor="#FF4500"/>
+                    
+                </VerticalStackLayout>
+            </Grid>
         </Frame>
 
         <!-- Прогресс-бар -->
         <ProgressBar Grid.Row="1" Progress="{Binding Progress}" Margin="20" HeightRequest="20" BackgroundColor="LightGray" ProgressColor="Green" />
+        <Label Grid.Row="1" 
+       Text="{Binding Traffic, StringFormat='Трафик: {0}'}" 
+       FontSize="20" 
+       TextColor="#32CD32" 
+       FontAttributes="Bold"
+       HorizontalOptions="Center" />
 
         <!-- Центральная часть: монитор с уведомлениями -->
         <Frame Grid.Row="2" Margin="20" BackgroundColor="#300A24" BorderColor="Gray" CornerRadius="10" HeightRequest="200">

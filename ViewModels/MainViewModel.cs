@@ -27,7 +27,7 @@ namespace Game.ViewModels
         private Random _random = new Random();
         private int _level = 1;
         private int _levelTarget = InitialTargetTraffic;
-        // Добавляем свойства для привязки
+       
         public int VpnCount => Upgrades.FirstOrDefault(u => u is VpnUpgrade)?.Count ?? 0;
         public int MirrorCount => Upgrades.FirstOrDefault(u => u is MirrorUpgrade)?.Count ?? 0;
         public int VpnPrice => Upgrades.FirstOrDefault(u => u is VpnUpgrade)?.Price ?? 0;
@@ -45,7 +45,7 @@ namespace Game.ViewModels
         {
             new VpnUpgrade(),
             new MirrorUpgrade(),
-            new AdCampaignUpgrade()
+            
         };
 
         public int PassiveIncome => GetPassiveIncome();
@@ -144,7 +144,7 @@ namespace Game.ViewModels
             _timer.AutoReset = true;
             _timer.Enabled = true;
 
-            _passiveIncomeTimer = new Timer(1000); // Каждую секунду
+            _passiveIncomeTimer = new Timer(1000);
             _passiveIncomeTimer.Elapsed += OnPassiveIncomeTimerElapsed;
             _passiveIncomeTimer.AutoReset = true;
             _passiveIncomeTimer.Enabled = true;
@@ -200,11 +200,7 @@ namespace Game.ViewModels
                 if (upgrade is MirrorUpgrade mirrorUpgrade)
                 {
                     income += mirrorUpgrade.Count * 10; 
-                }
-                else if (upgrade is AdCampaignUpgrade adCampaignUpgrade)
-                {
-                    income += adCampaignUpgrade.Count * 50;
-                }
+                }                              
             }
             return income;
         }
@@ -239,7 +235,6 @@ namespace Game.ViewModels
             {
                 Level++;
                 LevelTarget = (int)(LevelTarget * 1.5);
-                // Удалить: Traffic = 0;
                 ResetUpgrades();
                 AddNotification($"Поздравляем! Уровень {Level}. Новая цель: {LevelTarget} трафика. Ваш текущий трафик: {Traffic}", isPositive: true);
             }
@@ -258,11 +253,7 @@ namespace Game.ViewModels
                 else if (upgrade is MirrorUpgrade mirror)
                 {
                     mirror.Price = InitialMirrorPrice;
-                }
-                else if (upgrade is AdCampaignUpgrade ad)
-                {
-                    ad.Price = 5000; 
-                }
+                }                
             }
         }
 
@@ -301,14 +292,14 @@ namespace Game.ViewModels
 
             if (randomValue < positiveChance)
             {
-                // Позитивное событие
+                
                 isPositive = true;
                 trafficChange = GetPositiveTrafficChange();
                 message = GetPositiveEventMessage(trafficChange);
             }
             else
             {
-                // Негативное событие
+                
                 isPositive = false;
                 trafficChange = GetNegativeTrafficChange();
                 message = GetNegativeEventMessage(trafficChange);
@@ -374,13 +365,10 @@ namespace Game.ViewModels
             _timer.Stop();
             _passiveIncomeTimer.Stop();
 
-            // Сбросить трафик за клик
             TrafficPerClick = 1;
 
-            // Полный сброс всех улучшений
             ResetUpgrades();
 
-            // Сбросить уровень и трафик
             Traffic = 0;
             Level = 1;
             LevelTarget = InitialTargetTraffic;
@@ -389,7 +377,6 @@ namespace Game.ViewModels
             AddNotification("Game Over! Ваш сайт заблокирован Роскомнадзором.", isPositive: false);
             Notifications.Clear();
 
-            // Обновить привязки
             OnPropertyChanged(nameof(Traffic));
             OnPropertyChanged(nameof(Level));
             OnPropertyChanged(nameof(LevelTarget));
@@ -407,7 +394,6 @@ namespace Game.ViewModels
                 {
                     Traffic += passiveIncome;
                     AddNotification($"Пассивный доход: +{passiveIncome} трафика от зеркал", isPositive: true);
-                    // Обновляем привязку для отображения в интерфейсе
                     OnPropertyChanged(nameof(PassiveIncome));
                     OnPropertyChanged(nameof(Traffic));
                 }
